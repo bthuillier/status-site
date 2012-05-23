@@ -18,7 +18,7 @@ object Application extends Controller {
     )(Service.apply)(Service.unapply)
   )
   def index = Action {
-    Ok("Hello world")
+    Redirect(routes.Application.services)
   }
   
   def services = TODO

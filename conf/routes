@@ -8,7 +8,7 @@ GET     /                       controllers.Application.index
 # Tasks          
 GET     /services                  controllers.Application.services
 POST    /services                  controllers.Application.newService
-POST    /services/:id/delete       controllers.Application.deleteService(name: String)
+POST    /services/:name/delete       controllers.Application.deleteService(name: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
