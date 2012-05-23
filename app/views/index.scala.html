@@ -18,16 +18,6 @@
         }
     </ul>
     
-    <h2>Add a new task</h2>
-    
-    @form(routes.Application.newService) {
-        
-        @inputText(serviceForm("name"))
-        @inputText(serviceForm("description"))
-        @inputText(serviceForm("status"))
-        
-        <input type="submit" value="Create">
-        
-    }
+    <a class="btn success" id="add" href="@routes.Application.createService()">Add a new service</a>
     
 }

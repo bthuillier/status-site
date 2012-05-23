@@ -26,11 +26,15 @@ object Application extends Controller {
     Ok(views.html.index(Service.findAll().toList, serviceForm))
   }
   
+ def createService = Action {
+    Ok(views.html.create(serviceForm))
+  }  
+  
   def newService = Action { implicit request =>
   serviceForm.bindFromRequest.fold(
     errors => BadRequest(views.html.index(Service.findAll().toList, errors)),
     service => {
-      Service.insert(service)
+      Service.save(service)
       Redirect(routes.Application.services)
     }
   )

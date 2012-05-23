@@ -8,6 +8,7 @@ GET     /                       controllers.Application.index
 # Tasks          
 GET     /services                  controllers.Application.services
 POST    /services                  controllers.Application.newService
+GET     /services/new              controllers.Application.createService
 POST    /services/:id/delete       controllers.Application.deleteService(id: ObjectId)
 
 # Map static resources from the /public folder to the /assets URL path

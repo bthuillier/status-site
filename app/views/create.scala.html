@@ -1,0 +1,19 @@
+@(serviceForm: Form[Service])
+
+@import helper._
+
+@main("Service list") {
+    
+    <h2>Add a new task</h2>
+    
+    @form(routes.Application.newService) {
+        
+        @inputText(serviceForm("name"))
+        @inputText(serviceForm("description"))
+        @inputText(serviceForm("status"))
+        
+        <input type="submit" value="Create">
+        
+    }
+    
+}
