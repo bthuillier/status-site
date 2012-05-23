@@ -21,7 +21,9 @@ object Application extends Controller {
     Redirect(routes.Application.services)
   }
   
-  def services = TODO
+  def services = Action {
+    Ok(views.html.index(Service.findAll().toList, serviceForm))
+  }
   
   def newService = TODO
   

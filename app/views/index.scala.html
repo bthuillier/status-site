@@ -1,7 +1,33 @@
-@(message: String)
+@(services: List[Service], serviceForm: Form[Service])
 
-@main("Welcome to Play 2.0") {
+@import helper._
+
+@main("Todo list") {
     
-    @play20.welcome(message)
+    <h1>@services.size service(s)</h1>
+    
+    <ul>
+        @services.map { service =>
+            <li>
+                @service.name
+                
+                @form(routes.Application.deleteService(service.name)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+    
+    <h2>Add a new task</h2>
+    
+    @form(routes.Application.newService) {
+        
+        @inputText(serviceForm("name"))
+        @inputText(serviceForm("description"))
+        @inputText(serviceForm("status"))
+        
+        <input type="submit" value="Create">
+        
+    }
     
 }
