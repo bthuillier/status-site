@@ -8,13 +8,12 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
-  	"com.mongodb.casbah" %% "casbah" % "2.1.5-1",
-  	"com.novus" %% "salat-core" % "0.0.8-SNAPSHOT"    
+        "se.radley" %% "play-plugins-salat" % "1.0.3" 
 	)
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-   resolvers ++= Seq(
-     "repo.novus snaps" at "http://repo.novus.com/snapshots/")    
+       routesImport += "se.radley.plugin.salat.Binders._",
+       templatesImport += "org.bson.types.ObjectId"
 )
 
 }
