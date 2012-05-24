@@ -52,5 +52,7 @@ object ServiceController extends Controller {
         Redirect(routes.ServiceController.index)
       }
     )
-  } 
+  }
+  
+  def show(name: String) = TODO
 }
