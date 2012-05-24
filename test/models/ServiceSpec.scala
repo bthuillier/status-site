@@ -31,5 +31,13 @@ class ServiceSpec extends Specification {
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome.which(_ == "/services")      
     }
+    
+     "list services on the the first page" in {
+      running(FakeApplication(additionalConfiguration = mongoTestDatabase())) {
+        val result = controllers.Application.services(FakeRequest())
+        status(result) must equalTo(OK)
+        contentAsString(result) must contain("1 service(s)")
+      }
+    }   
   }
 }
