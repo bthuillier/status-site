@@ -38,6 +38,25 @@ class ServiceSpec extends Specification {
         status(result) must equalTo(OK)
         contentAsString(result) must contain("1 service(s)")
       }
-    }   
+    }
+     
+     "create a new service" in {
+      running(FakeApplication(additionalConfiguration = mongoTestDatabase())) {
+        val badResult = controllers.Application.newService(FakeRequest())
+        status(badResult) must equalTo(BAD_REQUEST)
+        val result = controllers.Application.newService(
+          FakeRequest().withFormUrlEncodedBody("name" -> "FooBar", "description" -> "2011-12-24", "status" -> "4f7dc7c47f25471356f51366")
+        )
+        status(result) must equalTo(SEE_OTHER)
+        redirectLocation(result) must beSome.which(_ == "/services")
+        val list = controllers.Application.services(FakeRequest())
+
+        status(list) must equalTo(OK)
+        contentAsString(list) must contain("2 service(s)")        
+        
+      }       
+     }
+     
+     
   }
 }
