@@ -12,8 +12,9 @@ case class Service(
     status: String)
     
 object Service extends ModelCompanion[Service, ObjectId] {
+	val status = List("up", "down", "maintenance")
 	val collection = mongoCollection("services")
 	val dao = new SalatDAO[Service, ObjectId](collection = collection) {}
 	def findOneByName(name: String): Option[Service] = dao.findOne(MongoDBObject("name" -> name))
-  
+			
 }

@@ -11,14 +11,14 @@
             <li>
                 @service.name
                 
-                @form(routes.Application.deleteService(service.id)) {
+                @form(routes.ServiceController.delete(service.id)) {
                     <input type="submit" class="btn btn-danger" value="Delete">
-                    <a class="btn btn-primary" href="@routes.Application.editService(service.id)">Edit</a>
+                    <a class="btn btn-primary" href="@routes.ServiceController.edit(service.id)">Edit</a>
                 }
             </li>
         }
     </ul>
     
-    <a class="btn btn-success" id="add" href="@routes.Application.createService()">Add a new service</a>
+    <a class="btn btn-success" id="add" href="@routes.ServiceController.create()">Add a new service</a>
     
 }

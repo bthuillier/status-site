@@ -34,7 +34,7 @@ class ServiceSpec extends Specification {
     
      "list services on the the first page" in {
       running(FakeApplication(additionalConfiguration = mongoTestDatabase())) {
-        val result = controllers.Application.services(FakeRequest())
+        val result = controllers.ServiceController.index(FakeRequest())
         status(result) must equalTo(OK)
         contentAsString(result) must contain("1 service(s)")
       }
@@ -42,14 +42,14 @@ class ServiceSpec extends Specification {
      
      "create a new service" in {
       running(FakeApplication(additionalConfiguration = mongoTestDatabase())) {
-        val badResult = controllers.Application.newService(FakeRequest())
+        val badResult = controllers.ServiceController.save(FakeRequest())
         status(badResult) must equalTo(BAD_REQUEST)
-        val result = controllers.Application.newService(
+        val result = controllers.ServiceController.save(
           FakeRequest().withFormUrlEncodedBody("name" -> "FooBar", "description" -> "2011-12-24", "status" -> "4f7dc7c47f25471356f51366")
         )
         status(result) must equalTo(SEE_OTHER)
         redirectLocation(result) must beSome.which(_ == "/services")
-        val list = controllers.Application.services(FakeRequest())
+        val list = controllers.ServiceController.index(FakeRequest())
 
         status(list) must equalTo(OK)
         contentAsString(list) must contain("2 service(s)")        
@@ -59,14 +59,14 @@ class ServiceSpec extends Specification {
 
      "edit a service" in {
       running(FakeApplication(additionalConfiguration = mongoTestDatabase())) {
-        val badResult = controllers.Application.updateService(serviceId)(FakeRequest())
+        val badResult = controllers.ServiceController.update(serviceId)(FakeRequest())
         status(badResult) must equalTo(BAD_REQUEST)
-        val result = controllers.Application.updateService(serviceId)(
+        val result = controllers.ServiceController.update(serviceId)(
           FakeRequest().withFormUrlEncodedBody("name" -> "FooBar", "description" -> "2011-12-24", "status" -> "4f7dc7c47f25471356f51366")
         )
         status(result) must equalTo(SEE_OTHER)
         redirectLocation(result) must beSome.which(_ == "/services")
-        val list = controllers.Application.services(FakeRequest())
+        val list = controllers.ServiceController.index(FakeRequest())
 
         status(list) must equalTo(OK)
         contentAsString(list) must contain("2 service(s)")        

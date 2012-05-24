@@ -6,11 +6,11 @@
     
     <h2>Add a new task</h2>
     
-    @form(routes.Application.updateService(id)) {
+    @form(routes.ServiceController.update(id)) {
         
         @inputText(serviceForm("name"))
         @inputText(serviceForm("description"))
-        @inputText(serviceForm("status"))
+        @select(serviceForm("status"), options = options(Service.status))
         
         <input type="submit" class="btn btn-success" value="Update">
         
