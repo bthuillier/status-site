@@ -26,7 +26,7 @@ class ServiceSpec extends Specification {
   }
   
   "Application" should {
-    "redirect to the service list on /" in {
+    "redirect to the service list on / " in {
       val result = controllers.Application.index(FakeRequest())
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome.which(_ == "/services")      
