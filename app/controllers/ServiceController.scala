@@ -54,5 +54,9 @@ object ServiceController extends Controller {
     )
   }
   
-  def show(name: String) = TODO
+  def show(name: String) = Action {
+    Service.findOneByName(name).map { service =>
+      Ok(views.html.service.show(service))
+    }.getOrElse(NotFound)
+  }
 }

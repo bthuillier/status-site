@@ -13,13 +13,12 @@ class ServiceSpec extends Specification {
     Map("mongo.default.db" -> "computer-database-test")
   }  
   
-  val serviceId = new ObjectId("4f7e12bf7f25471356f51e39")  
-
+  val serviceId  = new ObjectId("4f7e12bf7f25471356f51e39")  
+  val statusSite = Service(serviceId, "status-site", "the status site", "ok")
   step {
       running(FakeApplication(additionalConfiguration = mongoTestDatabase())) {
         Service.remove(MongoDBObject.empty)
 
-        val statusSite = Service(serviceId, "status-site", "the status site", "ok")
         Service.insert(statusSite)
 
       }
@@ -62,7 +61,7 @@ class ServiceSpec extends Specification {
         val badResult = controllers.ServiceController.update(serviceId)(FakeRequest())
         status(badResult) must equalTo(BAD_REQUEST)
         val result = controllers.ServiceController.update(serviceId)(
-          FakeRequest().withFormUrlEncodedBody("name" -> "FooBar", "description" -> "2011-12-24", "status" -> "4f7dc7c47f25471356f51366")
+          FakeRequest().withFormUrlEncodedBody("name" -> statusSite.name, "description" -> "2011-12-24", "status" -> "4f7dc7c47f25471356f51366")
         )
         status(result) must equalTo(SEE_OTHER)
         redirectLocation(result) must beSome.which(_ == "/services")
@@ -72,7 +71,18 @@ class ServiceSpec extends Specification {
         contentAsString(list) must contain("2 service(s)")        
         
       }       
-     }     
-     
+     }  
+
+     "show a service" in {
+      running(FakeApplication(additionalConfiguration = mongoTestDatabase())) {
+        val badResult = controllers.ServiceController.show("azerty")(FakeRequest())
+        status(badResult) must equalTo(NOT_FOUND)
+        val result = controllers.ServiceController.show(statusSite.name)(FakeRequest())
+        status(result) must equalTo(OK)
+
+        contentAsString(result) must contain(statusSite.name)        
+        
+      }       
+     }      
   }
 }
